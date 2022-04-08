@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: covid-app
+spec:
+  selector:
+    matchLabels:
+      app: covid-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: covid-app
+    spec:
+      containers:
+      - name: covid-app
+        image: docker.io/sahil674/node-app
+        ports:
+        - containerPort: 80
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: covid-app-service
+spec:
+  selector:
+    app: covid-app
+  ports:
+   - port: 80
+

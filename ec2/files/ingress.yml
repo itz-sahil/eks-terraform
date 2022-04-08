@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+  namespace: webapp
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            backend:
+              service:
+                name: covid-app-service
+                port:
+                  number: 80
+            path: /
+          - pathType: Prefix
+            backend:
+              service:
+                name: my-app-service
+                port:
+                  number: 5678
+            path: /myapp

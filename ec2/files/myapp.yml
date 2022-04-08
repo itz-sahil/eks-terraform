@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  selector:
+    matchLabels:
+      app: my-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app
+        image: hashicorp/http-echo
+        args:
+          - "-text=Hello this is content is being served from my-app deployment"
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: my-app-service
+spec:
+  selector:
+    app: my-app
+  ports:
+   - port: 5678
+
